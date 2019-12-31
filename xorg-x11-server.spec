@@ -16,7 +16,7 @@
 
 Name:           xorg-x11-server
 Version:        1.20.1
-Release:        10
+Release:        11
 Summary:        X.Org X11 X server
 License:        MIT and GPLv2
 URL:            https://www.x.org
@@ -42,9 +42,6 @@ Patch2:         0001-xfree86-use-modesetting-driver-by-default-on-GeForce.patch
 Patch3:         0001-xf86-dri2-Use-va_gl-as-vdpau_driver-for-Intel-i965-G.patch
 
 Patch4:         0001-Always-install-vbe-and-int10-sdk-headers.patch
-
-# Submitted upstream, but not going anywhere
-Patch5:         0001-autobind-GPUs-to-the-screen.patch
 
 # because the display-managers are not ready yet, do not upstream
 Patch6:         0001-Fedora-hack-Make-the-suid-root-wrapper-always-start-.patch
@@ -291,6 +288,12 @@ find %{inst_srcdir}/hw/xfree86 -name \*.c -delete
 %{_libdir}/xorg/protocol.txt
 
 %changelog
+* Tue Dec 31 2019 openEuler Buildteam <buildteam@openeuler.org> - 1.20.1-11
+- Type:bugfix
+- ID:NA
+- SUG:NA
+- DESC:optimization the spec
+
 * Sun Dec 29 2019 openEuler Buildteam <buildteam@openeuler.org> - 1.20.1-10
 - Type:bugfix
 - ID:NA
