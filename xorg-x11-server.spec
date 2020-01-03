@@ -54,6 +54,7 @@ Patch10:        0001-glx-check-for-indirect-context-in-CreateContextAttri.patch
 
 Patch6000:      0026-glamor_egl-Don-t-initialize-on-llvmpipe.patch
 Patch6001:      0027-glamor-egl-Avoid-crashing-on-broken-configurations.patch
+Patch6003:	xorg-s11-server-CVE-2018-20839.patch
 
 BuildRequires:  audit-libs-devel autoconf automake bison dbus-devel flex flex-devel git
 BuildRequires:  systemtap-sdt-devel libtool pkgconfig xorg-x11-util-macros xorg-x11-proto-devel
@@ -288,6 +289,12 @@ find %{inst_srcdir}/hw/xfree86 -name \*.c -delete
 %{_libdir}/xorg/protocol.txt
 
 %changelog
+* Thu Jan 3 2019 openEuler Buildteam <buildteam@openeuler.org> - 1.20.1-11
+- Type:bugfix
+- ID:NA
+- SUG:NA
+- DESC:bugfix about CVE-2018-20839.patch
+
 * Tue Dec 31 2019 openEuler Buildteam <buildteam@openeuler.org> - 1.20.1-11
 - Type:bugfix
 - ID:NA
