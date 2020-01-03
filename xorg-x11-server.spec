@@ -289,7 +289,7 @@ find %{inst_srcdir}/hw/xfree86 -name \*.c -delete
 %{_libdir}/xorg/protocol.txt
 
 %changelog
-* Thu Jan 3 2019 openEuler Buildteam <buildteam@openeuler.org> - 1.20.1-12
+* Thu Jan 3 2020 openEuler Buildteam <buildteam@openeuler.org> - 1.20.1-12
 - Type:bugfix
 - ID:NA
 - SUG:NA
