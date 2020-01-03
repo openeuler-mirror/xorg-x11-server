@@ -16,7 +16,7 @@
 
 Name:           xorg-x11-server
 Version:        1.20.1
-Release:        11
+Release:        12
 Summary:        X.Org X11 X server
 License:        MIT and GPLv2
 URL:            https://www.x.org
@@ -289,7 +289,7 @@ find %{inst_srcdir}/hw/xfree86 -name \*.c -delete
 %{_libdir}/xorg/protocol.txt
 
 %changelog
-* Thu Jan 3 2019 openEuler Buildteam <buildteam@openeuler.org> - 1.20.1-11
+* Thu Jan 3 2019 openEuler Buildteam <buildteam@openeuler.org> - 1.20.1-12
 - Type:bugfix
 - ID:NA
 - SUG:NA
