@@ -15,8 +15,8 @@
 %global pkgname xorg-server
 
 Name:           xorg-x11-server
-Version:        1.20.1
-Release:        12
+Version:        1.20.6
+Release:        1
 Summary:        X.Org X11 X server
 License:        MIT and GPLv2
 URL:            https://www.x.org
@@ -32,29 +32,7 @@ Source20:       http://svn.exactcode.de/t2/trunk/package/xorg/xorg-server/xvfb-r
 Source30:       xserver-sdk-abi-requires.release
 Source31:       xserver-sdk-abi-requires.git
 
-# From Debian use intel ddx driver only for gen4 and older chipsets
-Patch1:         06_use-intel-only-on-pre-gen4.diff
-# Default to xf86-video-modesetting on GeForce 8 and newer
-Patch2:         0001-xfree86-use-modesetting-driver-by-default-on-GeForce.patch
-
-# Default to va_gl on intel i965 as we use the modesetting drv there
-# va_gl should probably just be the default everywhere ?
-Patch3:         0001-xf86-dri2-Use-va_gl-as-vdpau_driver-for-Intel-i965-G.patch
-
-Patch4:         0001-Always-install-vbe-and-int10-sdk-headers.patch
-
-# because the display-managers are not ready yet, do not upstream
-Patch6:         0001-Fedora-hack-Make-the-suid-root-wrapper-always-start-.patch
-
-# Submitted upstream
-Patch7:         0001-xwayland-Remove-xwl_present_window-from-privates-on-.patch
-Patch8:         0001-xwayland-fix-access-to-invalid-pointer.patch
-Patch9:         0001-present-fix-freed-pointer-access.patch
-Patch10:        0001-glx-check-for-indirect-context-in-CreateContextAttri.patch
-
-Patch6000:      0026-glamor_egl-Don-t-initialize-on-llvmpipe.patch
-Patch6001:      0027-glamor-egl-Avoid-crashing-on-broken-configurations.patch
-Patch6003:	xorg-s11-server-CVE-2018-20839.patch
+Patch6000:	xorg-s11-server-CVE-2018-20839.patch
 
 BuildRequires:  audit-libs-devel autoconf automake bison dbus-devel flex flex-devel git
 BuildRequires:  systemtap-sdt-devel libtool pkgconfig xorg-x11-util-macros xorg-x11-proto-devel
@@ -283,12 +261,18 @@ find %{inst_srcdir}/hw/xfree86 -name \*.c -delete
 
 %files help
 %defattr(-,root,root)
-%doc ChangeLog README
+%doc ChangeLog README.md
 %{_mandir}/man*/*
 %{_localstatedir}/lib/xkb/README.compiled
 %{_libdir}/xorg/protocol.txt
 
 %changelog
+* Sat Jan 11 2020 openEuler Buildteam <buildteam@openeuler.org> - 1.20.6-1
+- Type:enhancement
+- Id:NA
+- SUG:NA
+- DESC:update version to 1.20.6
+
 * Thu Jan 3 2020 openEuler Buildteam <buildteam@openeuler.org> - 1.20.1-12
 - Type:bugfix
 - ID:NA
