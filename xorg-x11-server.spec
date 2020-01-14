@@ -55,7 +55,7 @@ Requires:       pixman >= 0.30.0 xkeyboard-config xkbcomp
 Requires:       system-setup-keyboard xorg-x11-drv-libinput libEGL
 Requires:       xorg-x11-xauth
 
-Obsoletes:      %{name}-common %{name}-Xorg %{name}-Xorg %{name}-Xnest %{name}-source %{name}-Xdmx %{name}-Xvfb %{name}-Xwayland
+Obsoletes:      %{name}-common %{name}-Xorg %{name}-Xnest %{name}-source %{name}-Xdmx %{name}-Xvfb %{name}-Xwayland
 Provides:       %{name}-common %{name}-Xorg %{name}-Xorg%{?_isa} %{name}-Xnest %{name}-source %{name}-Xdmx %{name}-Xvfb %{name}-Xwayland %{name}-Xwayland%{?_isa}
 
 Provides:       Xorg = %{version}-%{release}
