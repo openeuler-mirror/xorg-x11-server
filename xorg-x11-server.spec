@@ -16,7 +16,7 @@
 
 Name:           xorg-x11-server
 Version:        1.20.6
-Release:        2
+Release:        3
 Summary:        X.Org X11 X server
 License:        MIT and GPLv2
 URL:            https://www.x.org
@@ -174,6 +174,9 @@ autoreconf -ivf || exit 1
 
 %make_build V=1
 
+%check
+make check
+
 %install
 %make_install
 
@@ -266,6 +269,12 @@ find %{inst_srcdir}/hw/xfree86 -name \*.c -delete
 %{_libdir}/xorg/protocol.txt
 
 %changelog
+* Tue Jan 14 2020 openEuler Buildteam <buildteam@openeuler.org> - 1.20.6-3
+- Type:enhancement
+- Id:NA
+- SUG:NA
+- DESC:enable make test
+
 * Tue Jan 14 2020 openEuler Buildteam <buildteam@openeuler.org> - 1.20.6-2
 - Type:bugfix
 - Id:NA
