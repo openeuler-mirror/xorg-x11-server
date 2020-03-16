@@ -16,7 +16,7 @@
 
 Name:           xorg-x11-server
 Version:        1.20.6
-Release:        3
+Release:        4
 Summary:        X.Org X11 X server
 License:        MIT and GPLv2
 URL:            https://www.x.org
@@ -32,7 +32,49 @@ Source20:       http://svn.exactcode.de/t2/trunk/package/xorg/xorg-server/xvfb-r
 Source30:       xserver-sdk-abi-requires.release
 Source31:       xserver-sdk-abi-requires.git
 
-Patch6000:	xorg-s11-server-CVE-2018-20839.patch
+# maintainer convenience script
+Source40: driver-abi-rebuild.sh
+
+# From Debian use intel ddx driver only for gen4 and older chipsets
+Patch6000: 06_use-intel-only-on-pre-gen4.diff
+# Default to xf86-video-modesetting on GeForce 8 and newer
+Patch6001: 0001-xfree86-use-modesetting-driver-by-default-on-GeForce.patch
+
+# Default to va_gl on intel i965 as we use the modesetting drv there
+# va_gl should probably just be the default everywhere ?
+Patch6002: 0001-xf86-dri2-Use-va_gl-as-vdpau_driver-for-Intel-i965-G.patch
+
+# Submitted upstream, but not going anywhere
+Patch6003: 0001-autobind-GPUs-to-the-screen.patch
+
+# because the display-managers are not ready yet, do not upstream
+Patch6004: 0001-Fedora-hack-Make-the-suid-root-wrapper-always-start-.patch
+
+
+# https://bugzilla.redhat.com/show_bug.cgi?id=1697804
+Patch6005: 0001-Xi-return-AlreadyGrabbed-for-key-grabs-255.patch
+
+# Backported Xwayland randr resolution change emulation support
+Patch6006: 0001-dix-Add-GetCurrentClient-helper.patch
+Patch6007: 0002-xwayland-Add-wp_viewport-wayland-extension-support.patch
+Patch6008: 0003-xwayland-Use-buffer_damage-instead-of-surface-damage.patch
+Patch6009: 0004-xwayland-Add-fake-output-modes-to-xrandr-output-mode.patch
+Patch6010: 0005-xwayland-Use-RandR-1.2-interface-rev-2.patch
+Patch6011: 0006-xwayland-Add-per-client-private-data.patch
+Patch6012: 0007-xwayland-Add-support-for-storing-per-client-per-outp.patch
+Patch6013: 0008-xwayland-Add-support-for-randr-resolution-change-emu.patch
+Patch6014: 0009-xwayland-Add-xwlRRModeToDisplayMode-helper-function.patch
+Patch6015: 0010-xwayland-Add-xwlVidModeGetCurrentRRMode-helper-to-th.patch
+Patch6016: 0011-xwayland-Add-vidmode-mode-changing-emulation-support.patch
+Patch6017: 0012-xwayland-xwl_window_should_enable_viewport-Add-extra.patch
+Patch6018: 0013-xwayland-Set-_XWAYLAND_RANDR_EMU_MONITOR_RECTS-prope.patch
+Patch6019: 0014-xwayland-Fix-emulated-modes-not-being-removed-when-s.patch
+Patch6020: 0015-xwayland-Call-xwl_window_check_resolution_change_emu.patch
+Patch6021: 0016-xwayland-Fix-setting-of-_XWAYLAND_RANDR_EMU_MONITOR_.patch
+Patch6022: 0017-xwayland-Remove-unnecessary-xwl_window_is_toplevel-c.patch
+
+
+Patch6023:	xorg-s11-server-CVE-2018-20839.patch
 
 BuildRequires:  audit-libs-devel autoconf automake bison dbus-devel flex flex-devel git
 BuildRequires:  systemtap-sdt-devel libtool pkgconfig xorg-x11-util-macros xorg-x11-proto-devel
@@ -269,6 +311,12 @@ find %{inst_srcdir}/hw/xfree86 -name \*.c -delete
 %{_libdir}/xorg/protocol.txt
 
 %changelog
+* Mon Mar 16 2020 openEuler Buildteam <buildteam@openeuler.org> - 1.20.6-4
+- Type:enhancement
+- Id:NA
+- SUG:NA
+- DESC:patch init
+
 * Tue Jan 14 2020 openEuler Buildteam <buildteam@openeuler.org> - 1.20.6-3
 - Type:enhancement
 - Id:NA
