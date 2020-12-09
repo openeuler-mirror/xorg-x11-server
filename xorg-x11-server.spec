@@ -16,7 +16,7 @@
 
 Name:           xorg-x11-server
 Version:        1.20.8
-Release:        2
+Release:        3
 Summary:        X.Org X11 X server
 License:        MIT and GPLv2
 URL:            https://www.x.org
@@ -81,6 +81,7 @@ Patch0029: xorg-s11-server-CVE-2018-20839.patch
 Patch0030: CVE-2020-14346.patch
 Patch0031: CVE-2020-14361.patch
 Patch0032: CVE-2020-14362.patch
+Patch0033: CVE-2020-14345.patch
 
 BuildRequires:  audit-libs-devel autoconf automake bison dbus-devel flex flex-devel git
 BuildRequires:  systemtap-sdt-devel libtool pkgconfig 
@@ -323,11 +324,17 @@ find %{inst_srcdir}/hw/xfree86 -name \*.c -delete
 %{_libdir}/xorg/protocol.txt
 
 %changelog
+* Wed Dec 09 2020 orange-snn<songnannan2@huawei.com> - 1.20.8-3
+- Type:CVE
+- Id:CVE-2020-14345
+- SUG:NA
+- DESC:fix CVE-2020-14345
+
 * Tue Dec 08 2020 zhanzhimin<zhanzhimin@huawei.com> - 1.20.8-2
 - Type:CVE
-- CVE:CVE-2020-14346,CVE-2020-14361,CVE-2020-14362
+- Id:CVE-2020-14346,CVE-2020-14361,CVE-2020-14362
 - SUG:NA
-- DESC:fixCVE-2020-14346,CVE-2020-14361,CVE-2020-14362
+- DESC:fix CVE-2020-14346,CVE-2020-14361,CVE-2020-14362
 
 * Tue Jul 28 2020 chengguipeng<chengguipeng1@huawei.com> - 1.20.8-1
 - Type:enhancement
