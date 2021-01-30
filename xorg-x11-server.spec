@@ -15,8 +15,8 @@
 %global pkgname xorg-server
 
 Name:           xorg-x11-server
-Version:        1.20.8
-Release:        3
+Version:        1.20.10
+Release:        1
 Summary:        X.Org X11 X server
 License:        MIT and GPLv2
 URL:            https://www.x.org
@@ -78,10 +78,6 @@ Patch0026: 0022-xwayland-Call-xwl_window_check_resolution_change_emu.patch
 Patch0027: 0023-xwayland-Fix-setting-of-_XWAYLAND_RANDR_EMU_MONITOR_.patch
 Patch0028: 0024-xwayland-Remove-unnecessary-xwl_window_is_toplevel-c.patch
 Patch0029: xorg-s11-server-CVE-2018-20839.patch
-Patch0030: CVE-2020-14346.patch
-Patch0031: CVE-2020-14361.patch
-Patch0032: CVE-2020-14362.patch
-Patch0033: CVE-2020-14345.patch
 
 BuildRequires:  audit-libs-devel autoconf automake bison dbus-devel flex flex-devel git
 BuildRequires:  systemtap-sdt-devel libtool pkgconfig 
@@ -324,6 +320,9 @@ find %{inst_srcdir}/hw/xfree86 -name \*.c -delete
 %{_libdir}/xorg/protocol.txt
 
 %changelog
+* Sat Jan 30 2021 jinzhimin<jinzhmin2@huawei.com> - 1.20.10-1
+- Upgrade to 1.20.10
+
 * Wed Dec 09 2020 orange-snn<songnannan2@huawei.com> - 1.20.8-3
 - Type:CVE
 - Id:CVE-2020-14345
