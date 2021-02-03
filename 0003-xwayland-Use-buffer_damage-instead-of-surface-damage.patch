@@ -1,38 +1,38 @@
-From ce5eef7d33d7ba37cabee6b2bb020ed62abe6208 Mon Sep 17 00:00:00 2001
+From 30859f64d1718d1476648dcddbb3d81c2f932828 Mon Sep 17 00:00:00 2001
 From: Robert Mader <robert.mader@posteo.de>
 Date: Tue, 2 Jul 2019 12:03:12 +0200
-Subject: [PATCH xserver 03/24] xwayland: Use buffer_damage instead of surface
+Subject: [PATCH xserver 03/25] xwayland: Use buffer_damage instead of surface
  damage if available
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-
+ 
 When a viewport is set, damage will only work properly when using
 wl_surface_damage_buffer instead of wl_surface_damage.
-
+ 
 When no viewport is set, there should be no difference between
 surface and buffer damage.
-
+ 
 This is a preparation patch for using viewport to add support for fake
 mode-changes through xrandr for apps which want to change the resolution
 when going fullscreen.
-
+ 
 Changes by Hans de Goede <hdegoede@redhat.com>:
 -Split the damage changes out into their own patch
 -Add xwl_surface_damage helper
 -Also use buffer_damage / the new helper for the present and cursor code
-
+ 
 Reviewed-by: Olivier Fourdan <ofourdan@redhat.com>
 Acked-by: Michel Dänzer <mdaenzer@redhat.com>
 Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 (cherry picked from commit 7c6f17790d3aedb164481264b0f05a8a14103731)
 ---
  hw/xwayland/xwayland-cursor.c  | 12 ++++++------
- hw/xwayland/xwayland-present.c |  6 +++---
+ hw/xwayland/xwayland-present.c | 10 +++++-----
  hw/xwayland/xwayland.c         | 29 +++++++++++++++++++++++------
  hw/xwayland/xwayland.h         |  3 +++
- 4 files changed, 35 insertions(+), 15 deletions(-)
-
+ 4 files changed, 37 insertions(+), 17 deletions(-)
+ 
 diff --git a/hw/xwayland/xwayland-cursor.c b/hw/xwayland/xwayland-cursor.c
 index 66720bcc0..cbc715061 100644
 --- a/hw/xwayland/xwayland-cursor.c
@@ -64,27 +64,31 @@ index 66720bcc0..cbc715061 100644
      xwl_cursor->frame_cb = wl_surface_frame(xwl_cursor->surface);
      wl_callback_add_listener(xwl_cursor->frame_cb, &frame_listener, xwl_cursor);
 diff --git a/hw/xwayland/xwayland-present.c b/hw/xwayland/xwayland-present.c
-index 5ba7dce08..58c32941d 100644
+index d177abdd8..f4027f91e 100644
 --- a/hw/xwayland/xwayland-present.c
 +++ b/hw/xwayland/xwayland-present.c
-@@ -495,9 +495,9 @@ xwl_present_flip(WindowPtr present_window,
+@@ -505,11 +505,11 @@ xwl_present_flip(WindowPtr present_window,
      /* Realign timer */
      xwl_present_reset_timer(xwl_present_window);
  
--    wl_surface_damage(xwl_window->surface, 0, 0,
+-    wl_surface_damage(xwl_window->surface,
+-                      damage_box->x1 - present_window->drawable.x,
+-                      damage_box->y1 - present_window->drawable.y,
 -                      damage_box->x2 - damage_box->x1,
 -                      damage_box->y2 - damage_box->y1);
-+    xwl_surface_damage(xwl_window->xwl_screen, xwl_window->surface, 0, 0,
++    xwl_surface_damage(xwl_window->xwl_screen, xwl_window->surface,
++                       damage_box->x1 - present_window->drawable.x,
++                       damage_box->y1 - present_window->drawable.y,
 +                       damage_box->x2 - damage_box->x1,
 +                       damage_box->y2 - damage_box->y1);
  
      wl_surface_commit(xwl_window->surface);
  
 diff --git a/hw/xwayland/xwayland.c b/hw/xwayland/xwayland.c
-index 2084f2afb..942981834 100644
+index a70c1002f..811257b00 100644
 --- a/hw/xwayland/xwayland.c
 +++ b/hw/xwayland/xwayland.c
-@@ -803,6 +803,16 @@ xwl_destroy_window(WindowPtr window)
+@@ -792,6 +792,16 @@ xwl_destroy_window(WindowPtr window)
      return ret;
  }
  
@@ -101,7 +105,7 @@ index 2084f2afb..942981834 100644
  static void
  xwl_window_post_damage(struct xwl_window *xwl_window)
  {
-@@ -839,13 +849,15 @@ xwl_window_post_damage(struct xwl_window *xwl_window)
+@@ -828,13 +838,15 @@ xwl_window_post_damage(struct xwl_window *xwl_window)
       */
      if (RegionNumRects(region) > 256) {
          box = RegionExtents(region);
@@ -122,7 +126,7 @@ index 2084f2afb..942981834 100644
      }
  
      xwl_window_create_frame_callback(xwl_window);
-@@ -904,8 +916,13 @@ registry_global(void *data, struct wl_registry *registry, uint32_t id,
+@@ -893,8 +905,13 @@ registry_global(void *data, struct wl_registry *registry, uint32_t id,
      struct xwl_screen *xwl_screen = data;
  
      if (strcmp(interface, "wl_compositor") == 0) {
@@ -138,7 +142,7 @@ index 2084f2afb..942981834 100644
      else if (strcmp(interface, "wl_shm") == 0) {
          xwl_screen->shm = wl_registry_bind(registry, id, &wl_shm_interface, 1);
 diff --git a/hw/xwayland/xwayland.h b/hw/xwayland/xwayland.h
-index f949ea157..fa78b5ab9 100644
+index 91ae21eeb..1244d2e91 100644
 --- a/hw/xwayland/xwayland.h
 +++ b/hw/xwayland/xwayland.h
 @@ -382,6 +382,9 @@ struct xwl_output {
@@ -149,8 +153,8 @@ index f949ea157..fa78b5ab9 100644
 +                        struct wl_surface *surface,
 +                        int32_t x, int32_t y, int32_t width, int32_t height);
  
- Bool xwl_screen_init_cursor(struct xwl_screen *xwl_screen);
+ void xwl_screen_roundtrip (struct xwl_screen *xwl_screen);
  
 -- 
-2.25.2
-
+2.28.0
+ 
