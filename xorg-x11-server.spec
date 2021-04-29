@@ -16,7 +16,7 @@
 
 Name:           xorg-x11-server
 Version:        1.20.8
-Release:        4
+Release:        5
 Summary:        X.Org X11 X server
 License:        MIT and GPLv2
 URL:            https://www.x.org
@@ -194,9 +194,9 @@ test `getminor extension` == %{extension_minor}
 
 %build
 
-export LDFLAGS="$RPM_LD_FLAGS -specs=/usr/lib/rpm/%{_vendor}/%{_vendor}-hardened-ld"
-export CXXFLAGS="$RPM_OPT_FLAGS -specs=/usr/lib/rpm/%{_vendor}/%{_vendor}-hardened-cc1"
-export CFLAGS="$RPM_OPT_FLAGS -specs=/usr/lib/rpm/%{_vendor}/%{_vendor}-hardened-cc1"
+export LDFLAGS="$RPM_LD_FLAGS -specs=/usr/lib/rpm/generic-hardened-ld"
+export CXXFLAGS="$RPM_OPT_FLAGS -specs=/usr/lib/rpm/generic-hardened-cc1"
+export CFLAGS="$RPM_OPT_FLAGS -specs=/usr/lib/rpm/generic-hardened-cc1"
 
 %ifnarch %{ix86} x86_64
 %global no_int10 --disable-vbe --disable-int10-module
@@ -327,6 +327,11 @@ find %{inst_srcdir}/hw/xfree86 -name \*.c -delete
 %{_libdir}/xorg/protocol.txt
 
 %changelog
+* Thu Apr 29 2021 wangkerong <wangkerong@huawei.com> - 1.20.8-5
+- Type:BugFix
+- Id:NA
+- SUG:Compilation optimization
+
 * Mon Feb 01 2020 yeah_wang<wangye70@huawei.com> - 1.20.8-4
 - Type:CVE
 - Id:CVE-2020-14347 CVE-2020-14360 CVE-2020-25712
