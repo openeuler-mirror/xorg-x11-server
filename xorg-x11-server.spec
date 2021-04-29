@@ -332,7 +332,7 @@ find %{inst_srcdir}/hw/xfree86 -name \*.c -delete
 - Id:NA
 - SUG:Compilation optimization
 
-* Mon Feb 01 2020 yeah_wang<wangye70@huawei.com> - 1.20.8-4
+* Mon Feb 01 2021 yeah_wang<wangye70@huawei.com> - 1.20.8-4
 - Type:CVE
 - Id:CVE-2020-14347 CVE-2020-14360 CVE-2020-25712
 - SUG:NA
