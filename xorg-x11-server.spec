@@ -16,7 +16,7 @@
 
 Name:           xorg-x11-server
 Version:        1.20.10
-Release:        1
+Release:        2
 Summary:        X.Org X11 X server
 License:        MIT and GPLv2
 URL:            https://www.x.org
@@ -78,6 +78,7 @@ Patch0026: 0022-xwayland-Call-xwl_window_check_resolution_change_emu.patch
 Patch0027: 0023-xwayland-Fix-setting-of-_XWAYLAND_RANDR_EMU_MONITOR_.patch
 Patch0028: 0024-xwayland-Remove-unnecessary-xwl_window_is_toplevel-c.patch
 Patch0029: xorg-s11-server-CVE-2018-20839.patch
+Patch0030: backport-CVE-2021-3472.patch
 
 BuildRequires:  audit-libs-devel autoconf automake bison dbus-devel flex flex-devel git
 BuildRequires:  systemtap-sdt-devel libtool pkgconfig 
@@ -187,9 +188,9 @@ test `getminor extension` == %{extension_minor}
 
 %build
 
-export LDFLAGS="$RPM_LD_FLAGS -specs=/usr/lib/rpm/%{_vendor}/%{_vendor}-hardened-ld"
-export CXXFLAGS="$RPM_OPT_FLAGS -specs=/usr/lib/rpm/%{_vendor}/%{_vendor}-hardened-cc1"
-export CFLAGS="$RPM_OPT_FLAGS -specs=/usr/lib/rpm/%{_vendor}/%{_vendor}-hardened-cc1"
+export LDFLAGS="$RPM_LD_FLAGS -specs=/usr/lib/rpm/generic-hardened-ld"
+export CXXFLAGS="$RPM_OPT_FLAGS -specs=/usr/lib/rpm/generic-hardened-cc1"
+export CFLAGS="$RPM_OPT_FLAGS -specs=/usr/lib/rpm/generic-hardened-cc1"
 
 %ifnarch %{ix86} x86_64
 %global no_int10 --disable-vbe --disable-int10-module
@@ -320,6 +321,12 @@ find %{inst_srcdir}/hw/xfree86 -name \*.c -delete
 %{_libdir}/xorg/protocol.txt
 
 %changelog
+* Thu Jun 03 2021 zhanzhimin<zhanzhimin@huawei.com> - 1.20.10-2
+- Type:CVE
+- Id:CVE-2021-3472
+- SUG:NA
+- DESC:fix CVE-2021-3472
+
 * Sat Jan 30 2021 jinzhimin<jinzhmin2@huawei.com> - 1.20.10-1
 - Upgrade to 1.20.10
 
