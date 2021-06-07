@@ -16,7 +16,7 @@
 
 Name:           xorg-x11-server
 Version:        1.20.8
-Release:        6
+Release:        7
 Summary:        X.Org X11 X server
 License:        MIT and GPLv2
 URL:            https://www.x.org
@@ -87,7 +87,7 @@ Patch0035: backport-CVE-2020-14360.patch
 Patch0036: backport-CVE-2020-14347.patch
 Patch0037: backport-CVE-2021-3472.patch
 
-BuildRequires:  audit-libs-devel autoconf automake bison dbus-devel flex flex-devel git
+BuildRequires:  audit-libs-devel autoconf automake bison dbus-devel flex flex-devel git gcc
 BuildRequires:  systemtap-sdt-devel libtool pkgconfig 
 BuildRequires:  xorg-x11-font-utils libepoxy-devel systemd-devel 
 BuildRequires:  libXfont2-devel libXau-devel libxkbfile-devel libXres-devel
@@ -328,6 +328,12 @@ find %{inst_srcdir}/hw/xfree86 -name \*.c -delete
 %{_libdir}/xorg/protocol.txt
 
 %changelog
+* Mom Jun 07 2021 wangkeorng<wangkerong@huawei.com> - 1.20.8-7
+- Type:NA
+- Id:NA
+- SUG:NA
+- DESC:Add a BuildRequires for gcc
+
 * Thu Jun 03 2021 zhanzhimin<zhanzhimin@huawei.com> - 1.20.8-6
 - Type:CVE
 - Id:CVE-2021-3472
