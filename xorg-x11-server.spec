@@ -16,7 +16,7 @@
 
 Name:           xorg-x11-server
 Version:        1.20.10
-Release:        3
+Release:        4
 Summary:        X.Org X11 X server
 License:        MIT and GPLv2
 URL:            https://www.x.org
@@ -321,6 +321,9 @@ find %{inst_srcdir}/hw/xfree86 -name \*.c -delete
 %{_libdir}/xorg/protocol.txt
 
 %changelog
+* Tun Jun 08 2021 zhanglin <lin.zhang@turbolinux.com.cn> - 1.20.10-4
+- Remove pam_console dependency
+
 * Mon Jun 07 2021 wangkerong<wangkerong@huawei.com> - 1.20.10-3
 - Type:NA
 - Id:NA
