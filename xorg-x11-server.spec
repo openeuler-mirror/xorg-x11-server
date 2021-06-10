@@ -16,7 +16,7 @@
 
 Name:           xorg-x11-server
 Version:        1.20.8
-Release:        7
+Release:        8
 Summary:        X.Org X11 X server
 License:        MIT and GPLv2
 URL:            https://www.x.org
@@ -208,7 +208,6 @@ export CFLAGS="$RPM_OPT_FLAGS -specs=/usr/lib/rpm/%{_vendor}/%{_vendor}-hardened
 %global kdrive --enable-kdrive --enable-xephyr --disable-xfake --disable-xfbdev
 %global bodhi_flags --with-vendor-name="openEuler Project"
 %global dri_flags --enable-dri --enable-dri2 --enable-dri3 --enable-suid-wrapper --enable-glamor
-%global optflags  %(echo %{optflags} -Wl,-z,now)
 
 autoreconf -ivf || exit 1
 
@@ -329,6 +328,12 @@ find %{inst_srcdir}/hw/xfree86 -name \*.c -delete
 %{_libdir}/xorg/protocol.txt
 
 %changelog
+* Thu Jun 10 2021 wangkerong<wangkerong@huawei.com> - 1.20.8-8
+- Type:bugfix
+- Id:NA
+- SUG:NA
+- DESC:revert add secure compilation options
+
 * Mon Jun 07 2021 zhanzhimin<zhanzhimin@huawei.com> - 1.20.8-7
 - Type:bugfix
 - Id:NA
