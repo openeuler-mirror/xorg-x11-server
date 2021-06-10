@@ -16,7 +16,7 @@
 
 Name:           xorg-x11-server
 Version:        1.20.10
-Release:        5
+Release:        6
 Summary:        X.Org X11 X server
 License:        MIT and GPLv2
 URL:            https://www.x.org
@@ -201,7 +201,6 @@ export CFLAGS="$RPM_OPT_FLAGS -specs=/usr/lib/rpm/generic-hardened-cc1"
 %global kdrive --enable-kdrive --enable-xephyr --disable-xfake --disable-xfbdev
 %global bodhi_flags --with-vendor-name="openEuler Project"
 %global dri_flags --enable-dri --enable-dri2 --enable-dri3 --enable-suid-wrapper --enable-glamor
-%global optflags %(echo %{optflags} -Wl,-z,now)
 
 autoreconf -ivf || exit 1
 
@@ -322,6 +321,9 @@ find %{inst_srcdir}/hw/xfree86 -name \*.c -delete
 %{_libdir}/xorg/protocol.txt
 
 %changelog
+* Thu Jun 10 2021 wangkerong<wangkerong@huawei.com> - 1.20.10-6
+- revert add secure compilation options
+
 * Tue Jun 08 2021 zhanzhimin<zhanzhimin@huawei.com> - 1.20.10-5
 - add secure compilation options
 
