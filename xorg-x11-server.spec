@@ -16,7 +16,7 @@
 
 Name:           xorg-x11-server
 Version:        1.20.8
-Release:        8
+Release:        9
 Summary:        X.Org X11 X server
 License:        MIT and GPLv2
 URL:            https://www.x.org
@@ -328,6 +328,9 @@ find %{inst_srcdir}/hw/xfree86 -name \*.c -delete
 %{_libdir}/xorg/protocol.txt
 
 %changelog
+* Tue Jun 15 2021 hanhui<hanhui15@huawei.com> - 1.20.8-9
+- Remove pam_console dependency
+
 * Thu Jun 10 2021 wangkerong<wangkerong@huawei.com> - 1.20.8-8
 - Type:bugfix
 - Id:NA
