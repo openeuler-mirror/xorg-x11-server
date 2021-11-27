@@ -15,8 +15,8 @@
 %global pkgname xorg-server
 
 Name:           xorg-x11-server
-Version:        1.20.10
-Release:        6
+Version:        1.20.11
+Release:        1
 Summary:        X.Org X11 X server
 License:        MIT and GPLv2
 URL:            https://www.x.org
@@ -50,48 +50,20 @@ Patch0003: 0001-autobind-GPUs-to-the-screen.patch
 # because the display-managers are not ready yet, do not upstream
 Patch0004: 0001-Fedora-hack-Make-the-suid-root-wrapper-always-start-.patch
  
-# Backports from current stable "server-1.20-branch":
-# Backports from "master" upstream:
-# Backported Xwayland randr resolution change emulation support
-Patch0005: 0001-dix-Add-GetCurrentClient-helper.patch
-Patch0006: 0002-xwayland-Add-wp_viewport-wayland-extension-support.patch
-Patch0007: 0003-xwayland-Use-buffer_damage-instead-of-surface-damage.patch
-Patch0008: 0004-xwayland-Add-fake-output-modes-to-xrandr-output-mode.patch
-Patch0009: 0005-xwayland-Use-RandR-1.2-interface-rev-2.patch
-Patch0010: 0006-xwayland-Add-per-client-private-data.patch
-Patch0011: 0007-xwayland-Add-support-for-storing-per-client-per-outp.patch
-Patch0012: 0008-xwayland-Add-support-for-randr-resolution-change-emu.patch
-Patch0013: 0009-xwayland-Add-xwlRRModeToDisplayMode-helper-function.patch
-Patch0014: 0010-xwayland-Add-xwlVidModeGetCurrentRRMode-helper-to-th.patch
-Patch0015: 0011-xwayland-Add-vidmode-mode-changing-emulation-support.patch
-Patch0016: 0012-xwayland-xwl_window_should_enable_viewport-Add-extra.patch
-Patch0017: 0013-xwayland-Set-_XWAYLAND_RANDR_EMU_MONITOR_RECTS-prope.patch
-Patch0018: 0014-xwayland-Cache-client-id-for-the-window-manager-clie.patch
-Patch0019: 0015-xwayland-Reuse-viewport-instead-of-recreating.patch
-Patch0020: 0016-xwayland-Recurse-on-finding-the-none-wm-owner.patch
-Patch0021: 0017-xwayland-Make-window_get_none_wm_owner-return-a-Wind.patch
-Patch0022: 0018-xwayland-Check-emulation-on-client-toplevel-resize.patch
-Patch0023: 0019-xwayland-Also-check-resolution-change-emulation-when.patch
-Patch0024: 0020-xwayland-Also-hook-screen-s-MoveWindow-method.patch
-Patch0025: 0021-xwayland-Fix-emulated-modes-not-being-removed-when-s.patch
-Patch0026: 0022-xwayland-Call-xwl_window_check_resolution_change_emu.patch
-Patch0027: 0023-xwayland-Fix-setting-of-_XWAYLAND_RANDR_EMU_MONITOR_.patch
-Patch0028: 0024-xwayland-Remove-unnecessary-xwl_window_is_toplevel-c.patch
 Patch0029: xorg-s11-server-CVE-2018-20839.patch
-Patch0030: backport-CVE-2021-3472.patch
 
-BuildRequires:  audit-libs-devel autoconf automake bison dbus-devel flex flex-devel git gcc
+BuildRequires:  audit-libs-devel autoconf automake bison dbus-devel flex git gcc 
 BuildRequires:  systemtap-sdt-devel libtool pkgconfig 
-BuildRequires:  xorg-x11-font-utils libepoxy-devel systemd-devel 
+BuildRequires:  xorg-x11-font-utils systemd-devel 
 BuildRequires:  libXfont2-devel libXau-devel libxkbfile-devel libXres-devel
 BuildRequires:  libfontenc-devel libXtst-devel libXdmcp-devel libX11-devel libXext-devel
-BuildRequires:  libXinerama-devel libXi-devel libXt-devel libdmx-devel libXmu-devel libXrender-devel
+BuildRequires:  libXinerama-devel libXt-devel libdmx-devel libXmu-devel libXrender-devel
 BuildRequires:  libXi-devel libXpm-devel libXaw-devel libXfixes-devel libepoxy-devel libXv-devel 
-BuildRequires:  wayland-devel wayland-protocols-devel egl-wayland-devel openssl-devel kernel-headers
+BuildRequires:  openssl-devel kernel-headers
 BuildRequires:  mesa-libEGL-devel mesa-libgbm-devel libudev-devel xcb-util-devel 
 BuildRequires:  xcb-util-image-devel xcb-util-wm-devel xcb-util-keysyms-devel xcb-util-renderutil-devel 
 BuildRequires:  xorg-x11-xtrans-devel >= 1.3.2 xorg-x11-util-macros >= 1.17 xorg-x11-proto-devel >= 7.7  
-BuildRequires:  xorg-x11-font-utils >= 7.2 libselinux-devel >= 2.0.86 wayland-devel >= 1.3.0
+BuildRequires:  xorg-x11-font-utils >= 7.2 libselinux-devel >= 2.0.86 
 BuildRequires:  libxshmfence-devel >= 1.1 pixman-devel >= 0.30.0 libdrm-devel >= 2.4.0  
 BuildRequires:  mesa-libGL-devel >= 9.2 libpciaccess-devel >= 0.13.1
 
@@ -102,9 +74,6 @@ BuildRequires:  libunwind-devel
 Requires:       pixman >= 0.30.0 xkeyboard-config xkbcomp
 Requires:       system-setup-keyboard xorg-x11-drv-libinput libEGL
 Requires:       xorg-x11-xauth
-
-Obsoletes:      %{name}-common < %{version}-%{release} %{name}-Xorg < %{version}-%{release} %{name}-Xnest < %{version}-%{release} %{name}-source %{name}-Xdmx < %{version}-%{release} %{name}-Xvfb < %{version}-%{release} %{name}-Xwayland < %{version}-%{release}
-Provides:       %{name}-common = %{version}-%{release} %{name}-Xorg = %{version}-%{release} %{name}-Xorg%{?_isa} = %{version}-%{release} %{name}-Xnest = %{version}-%{release} %{name}-source = %{version}-%{release} %{name}-Xdmx = %{version}-%{release} %{name}-Xvfb = %{version}-%{release} %{name}-Xwayland = %{version}-%{release} %{name}-Xwayland%{?_isa} = %{version}-%{release}
 
 Provides:       Xorg = %{version}-%{release}
 Obsoletes: 		Xorg < %{version}-%{release}
@@ -121,15 +90,64 @@ Provides:       xorg-x11-glamor = %{version}-%{release}
 Obsoletes:      xorg-x11-drv-modesetting < %{version}-%{release}
 Provides:       xorg-x11-drv-modesetting = %{version}-%{release}
 Obsoletes:      xorg-x11-drv-vmmouse < 13.1.0-4
-Provides:       Xnest = %{version}-%{release} Xdmx = %{version}-%{release}  Xvfb = %{version}-%{release} Xephyr = %{version}-%{release}
-Obsoletes:      Xnest < %{version}-%{release} Xdmx < %{version}-%{release}  Xvfb < %{version}-%{release} Xephyr < %{version}-%{release}
 
 %description
 X.Org X11 X server
 
+%package common
+Summary: Xorg server common files
+Requires: pixman >= 0.30.0
+Requires: xkeyboard-config xkbcomp
+ 
+%description common
+Common files shared among all X servers.
+
+%package Xnest
+Summary: A nested server
+Requires: xorg-x11-server-common >= %{version}-%{release}
+Provides: Xnest
+ 
+%description Xnest
+Xnest is an X server which has been implemented as an ordinary
+X application.  It runs in a window just like other X applications,
+but it is an X server itself in which you can run other software.  It
+is a very useful tool for developers who wish to test their
+applications without running them on their real X server.
+  
+%package Xdmx
+Summary: Distributed Multihead X Server and utilities
+Requires: xorg-x11-server-common >= %{version}-%{release}
+Provides: Xdmx
+ 
+%description Xdmx
+Xdmx is proxy X server that provides multi-head support for multiple displays
+attached to different machines (each of which is running a typical X server).
+When Xinerama is used with Xdmx, the multiple displays on multiple machines
+are presented to the user as a single unified screen.  A simple application
+for Xdmx would be to provide multi-head support using two desktop machines,
+each of which has a single display device attached to it.  A complex
+application for Xdmx would be to unify a 4 by 4 grid of 1280x1024 displays
+(each attached to one of 16 computers) into a unified 5120x4096 display.
+  
+%package Xvfb
+Summary: A X Windows System virtual framebuffer X server
+# xvfb-run is GPLv2, rest is MIT
+License: MIT and GPLv2
+Requires: xorg-x11-server-common >= %{version}-%{release}
+# required for xvfb-run
+Requires: xorg-x11-xauth
+Provides: Xvfb
+ 
+%description Xvfb
+Xvfb (X Virtual Frame Buffer) is an X server that is able to run on
+machines with no display hardware and no physical input devices.
+Xvfb simulates a dumb framebuffer using virtual memory.  Xvfb does
+not open any devices, but behaves otherwise as an X display.  Xvfb
+is normally used for testing servers.
+
 %package        Xephyr
 Summary:        A nested server
-Requires:       xorg-x11-server >= %{version}-%{release}
+Requires:       xorg-x11-server-common >= %{version}-%{release}
 Provides:       Xephyr
 
 %description    Xephyr
@@ -157,6 +175,13 @@ outside of the standard X11 source code tree.  Developers writing video
 drivers, input drivers, or other X modules should install this package.
 
 %package_help
+
+%package source
+Summary: Xserver source code required to build VNC server (Xvnc)
+BuildArch: noarch
+ 
+%description source
+Xserver source code needed to build VNC server (Xvnc)
 
 %prep
 %autosetup -N -n xorg-server-%{version}
@@ -206,7 +231,6 @@ autoreconf -ivf || exit 1
 
 %configure %{xservers} \
         --enable-dependency-tracking \
-        --enable-xwayland-eglstream \
         --with-pic \
         %{?no_int10} --with-int10=x86emu \
         --with-default-font-path=%{default_font_path} \
@@ -217,10 +241,11 @@ autoreconf -ivf || exit 1
         --without-dtrace \
         --disable-linux-acpi --disable-linux-apm \
         --enable-xselinux --enable-record --enable-present \
+        --enable-xcsecurity \
         --enable-config-udev \
         --disable-unit-tests \
         --enable-dmx \
-        --enable-xwayland \
+        --disable-xwayland \
         %{dri_flags} %{?bodhi_flags} \
         ${CONFIGURE}
 
@@ -277,20 +302,41 @@ find %{inst_srcdir}/hw/xfree86 -name \*.c -delete
 %endif
 }
 
-%files
-%defattr(-,root,root)
+%files common
 %doc COPYING
+%{_mandir}/man1/Xserver.1*
+%{_libdir}/xorg/protocol.txt
+%dir %{_localstatedir}/lib/xkb
+%{_localstatedir}/lib/xkb/README.compiled
+ 
+%if 1
+%global Xorgperms %attr(4755, root, root)
+%else
+# disable until module loading is audited
+%global Xorgperms %attr(0711,root,root) %caps(cap_sys_admin,cap_sys_rawio,cap_dac_override=pe)
+%endif
+ 
+%files 
 %config %attr(0644,root,root) %{_sysconfdir}/pam.d/xserver
-%{_bindir}/*
+%{_bindir}/X
+%{_bindir}/Xorg
 %{_libexecdir}/Xorg
-%attr(4755,root,root) %{_libexecdir}/Xorg.wrap
+%{Xorgperms} %{_libexecdir}/Xorg.wrap
+%{_bindir}/cvt
+%{_bindir}/gtf
+%dir %{_libdir}/xorg
+%dir %{_libdir}/xorg/modules
+%dir %{_libdir}/xorg/modules/drivers
 %{_libdir}/xorg/modules/drivers/modesetting_drv.so
+%dir %{_libdir}/xorg/modules/extensions
 %{_libdir}/xorg/modules/extensions/libglx.so
 %dir %{_libdir}/xorg/modules/input
+%{_libdir}/xorg/modules/libfbdevhw.so
 %{_libdir}/xorg/modules/libexa.so
-%{_libdir}/xorg/modules/libfb*.so
+%{_libdir}/xorg/modules/libfb.so
 %{_libdir}/xorg/modules/libglamoregl.so
-%{_libdir}/xorg/modules/libs*.so
+%{_libdir}/xorg/modules/libshadow.so
+%{_libdir}/xorg/modules/libshadowfb.so
 %{_libdir}/xorg/modules/libvgahw.so
 %{_libdir}/xorg/modules/libwfb.so
 %ifarch %{ix86} x86_64
@@ -298,13 +344,38 @@ find %{inst_srcdir}/hw/xfree86 -name \*.c -delete
 %{_libdir}/xorg/modules/libvbe.so
 %endif
 %dir %{_sysconfdir}/X11/xorg.conf.d
+%dir %{_datadir}/X11/xorg.conf.d
 %{_datadir}/X11/xorg.conf.d/10-quirks.conf
-%{_datadir}/xorg-x11-server-source
-%exclude %{_bindir}/Xephyr
-
+ 
+%files Xnest
+%{_bindir}/Xnest
+%{_mandir}/man1/Xnest.1*
+ 
+%files Xdmx
+%{_bindir}/Xdmx
+%{_bindir}/dmxaddinput
+%{_bindir}/dmxaddscreen
+%{_bindir}/dmxreconfig
+%{_bindir}/dmxresize
+%{_bindir}/dmxrminput
+%{_bindir}/dmxrmscreen
+%{_bindir}/dmxtodmx
+%{_bindir}/dmxwininfo
+%{_bindir}/vdltodmx
+%{_bindir}/dmxinfo
+%{_bindir}/xdmxconfig
+ 
+%files Xvfb
+%{_bindir}/Xvfb
+%{_bindir}/xvfb-run
+%{_mandir}/man1/Xvfb.1*
+ 
 %files Xephyr
-%defattr(-,root,root)
 %{_bindir}/Xephyr
+%{_mandir}/man1/Xephyr.1*
+ 
+%files source
+%{xserver_source_dir}
 
 %files devel
 %defattr(-,root,root)
@@ -321,6 +392,11 @@ find %{inst_srcdir}/hw/xfree86 -name \*.c -delete
 %{_libdir}/xorg/protocol.txt
 
 %changelog
+* Fri Dec 3 2021 yangcheng<yangcheng87@huawei.com> - 1.20.11-1
+- upgrade to 1.20.11
+- split the main xorg-x11-server package
+
+
 * Thu Jun 10 2021 wangkerong<wangkerong@huawei.com> - 1.20.10-6
 - revert add secure compilation options
 
