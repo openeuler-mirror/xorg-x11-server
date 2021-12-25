@@ -16,7 +16,7 @@
 
 Name:           xorg-x11-server
 Version:        1.20.11
-Release:        1
+Release:        2
 Summary:        X.Org X11 X server
 License:        MIT and GPLv2
 URL:            https://www.x.org
@@ -51,6 +51,10 @@ Patch0003: 0001-autobind-GPUs-to-the-screen.patch
 Patch0004: 0001-Fedora-hack-Make-the-suid-root-wrapper-always-start-.patch
  
 Patch0029: xorg-s11-server-CVE-2018-20839.patch
+Patch6000: backport-CVE-2021-4008.patch
+Patch6001: backport-CVE-2021-4009.patch
+Patch6002: backport-CVE-2021-4010.patch
+Patch6003: backport-CVE-2021-4011.patch
 
 BuildRequires:  audit-libs-devel autoconf automake bison dbus-devel flex git gcc 
 BuildRequires:  systemtap-sdt-devel libtool pkgconfig 
@@ -392,6 +396,12 @@ find %{inst_srcdir}/hw/xfree86 -name \*.c -delete
 %{_libdir}/xorg/protocol.txt
 
 %changelog
+* Sat Dec 25 2021 yangcheng<yangcheng87@huawei.com> - 1.20.11-2
+- Type:CVE
+- Id:CVE-2021-4008 CVE-2021-4009 CVE-2021-4010 CVE-2021-4011
+- SUG:NA
+- DESC:fix CVE-2021-4008 CVE-2021-4009 CVE-2021-4010 CVE-2021-4011
+
 * Fri Dec 3 2021 yangcheng<yangcheng87@huawei.com> - 1.20.11-1
 - upgrade to 1.20.11
 - split the main xorg-x11-server package
