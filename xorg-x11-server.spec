@@ -16,7 +16,7 @@
 
 Name:           xorg-x11-server
 Version:        1.20.11
-Release:        2
+Release:        3
 Summary:        X.Org X11 X server
 License:        MIT and GPLv2
 URL:            https://www.x.org
@@ -49,6 +49,33 @@ Patch0003: 0001-autobind-GPUs-to-the-screen.patch
  
 # because the display-managers are not ready yet, do not upstream
 Patch0004: 0001-Fedora-hack-Make-the-suid-root-wrapper-always-start-.patch
+# Backports from current stable "server-1.20-branch":
+# Backports from "master" upstream:
+# Backported Xwayland randr resolution change emulation support
+Patch0005: 0001-dix-Add-GetCurrentClient-helper.patch
+Patch0006: 0002-xwayland-Add-wp_viewport-wayland-extension-support.patch
+Patch0007: 0003-xwayland-Use-buffer_damage-instead-of-surface-damage.patch
+Patch0008: 0004-xwayland-Add-fake-output-modes-to-xrandr-output-mode.patch
+Patch0009: 0005-xwayland-Use-RandR-1.2-interface-rev-2.patch
+Patch0010: 0006-xwayland-Add-per-client-private-data.patch
+Patch0011: 0007-xwayland-Add-support-for-storing-per-client-per-outp.patch
+Patch0012: 0008-xwayland-Add-support-for-randr-resolution-change-emu.patch
+Patch0013: 0009-xwayland-Add-xwlRRModeToDisplayMode-helper-function.patch
+Patch0014: 0010-xwayland-Add-xwlVidModeGetCurrentRRMode-helper-to-th.patch
+Patch0015: 0011-xwayland-Add-vidmode-mode-changing-emulation-support.patch
+Patch0016: 0012-xwayland-xwl_window_should_enable_viewport-Add-extra.patch
+Patch0017: 0013-xwayland-Set-_XWAYLAND_RANDR_EMU_MONITOR_RECTS-prope.patch
+Patch0018: 0014-xwayland-Cache-client-id-for-the-window-manager-clie.patch
+Patch0019: 0015-xwayland-Reuse-viewport-instead-of-recreating.patch
+Patch0020: 0016-xwayland-Recurse-on-finding-the-none-wm-owner.patch
+Patch0021: 0017-xwayland-Make-window_get_none_wm_owner-return-a-Wind.patch
+Patch0022: 0018-xwayland-Check-emulation-on-client-toplevel-resize.patch
+Patch0023: 0019-xwayland-Also-check-resolution-change-emulation-when.patch
+Patch0024: 0020-xwayland-Also-hook-screen-s-MoveWindow-method.patch
+Patch0025: 0021-xwayland-Fix-emulated-modes-not-being-removed-when-s.patch
+Patch0026: 0022-xwayland-Call-xwl_window_check_resolution_change_emu.patch
+Patch0027: 0023-xwayland-Fix-setting-of-_XWAYLAND_RANDR_EMU_MONITOR_.patch
+Patch0028: 0024-xwayland-Remove-unnecessary-xwl_window_is_toplevel-c.patch
  
 Patch0029: xorg-s11-server-CVE-2018-20839.patch
 Patch6000: backport-CVE-2021-4008.patch
@@ -70,6 +97,7 @@ BuildRequires:  xorg-x11-xtrans-devel >= 1.3.2 xorg-x11-util-macros >= 1.17 xorg
 BuildRequires:  xorg-x11-font-utils >= 7.2 libselinux-devel >= 2.0.86 
 BuildRequires:  libxshmfence-devel >= 1.1 pixman-devel >= 0.30.0 libdrm-devel >= 2.4.0  
 BuildRequires:  mesa-libGL-devel >= 9.2 libpciaccess-devel >= 0.13.1
+BuildRequires:  wayland-devel wayland-protocols-devel egl-wayland-devel 
 
 %ifarch aarch64 %{arm} x86_64
 BuildRequires:  libunwind-devel
@@ -78,6 +106,9 @@ BuildRequires:  libunwind-devel
 Requires:       pixman >= 0.30.0 xkeyboard-config xkbcomp
 Requires:       system-setup-keyboard xorg-x11-drv-libinput libEGL
 Requires:       xorg-x11-xauth
+
+Obsoletes:      %{name}-Xorg < %{version}-%{release} %{name}-Xwayland < %{version}-%{release}
+Provides:       %{name}-Xorg = %{version}-%{release} %{name}-Xorg%{?_isa} = %{version}-%{release} %{name}-Xwayland = %{version}-%{release} %{name}-Xwayland%{?_isa} = %{version}-%{release}
 
 Provides:       Xorg = %{version}-%{release}
 Obsoletes: 		Xorg < %{version}-%{release}
@@ -235,6 +266,7 @@ autoreconf -ivf || exit 1
 
 %configure %{xservers} \
         --enable-dependency-tracking \
+        --enable-xwayland-eglstream \
         --with-pic \
         %{?no_int10} --with-int10=x86emu \
         --with-default-font-path=%{default_font_path} \
@@ -249,7 +281,7 @@ autoreconf -ivf || exit 1
         --enable-config-udev \
         --disable-unit-tests \
         --enable-dmx \
-        --disable-xwayland \
+        --enable-xwayland \
         %{dri_flags} %{?bodhi_flags} \
         ${CONFIGURE}
 
@@ -324,6 +356,7 @@ find %{inst_srcdir}/hw/xfree86 -name \*.c -delete
 %config %attr(0644,root,root) %{_sysconfdir}/pam.d/xserver
 %{_bindir}/X
 %{_bindir}/Xorg
+%{_bindir}/Xwayland
 %{_libexecdir}/Xorg
 %{Xorgperms} %{_libexecdir}/Xorg.wrap
 %{_bindir}/cvt
@@ -396,6 +429,9 @@ find %{inst_srcdir}/hw/xfree86 -name \*.c -delete
 %{_libdir}/xorg/protocol.txt
 
 %changelog
+* Mon Dec 27 2021 yangcheng<yangcheng87@huawei.com> - 1.20.11-3
+- provide xorg-x11-server-Xorg and xorg-x11-server-Xwayland
+
 * Sat Dec 25 2021 yangcheng<yangcheng87@huawei.com> - 1.20.11-2
 - Type:CVE
 - Id:CVE-2021-4008 CVE-2021-4009 CVE-2021-4010 CVE-2021-4011
