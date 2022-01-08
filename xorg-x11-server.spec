@@ -16,7 +16,7 @@
 
 Name:           xorg-x11-server
 Version:        1.20.11
-Release:        3
+Release:        4
 Summary:        X.Org X11 X server
 License:        MIT and GPLv2
 URL:            https://www.x.org
@@ -82,6 +82,7 @@ Patch6000: backport-CVE-2021-4008.patch
 Patch6001: backport-CVE-2021-4009.patch
 Patch6002: backport-CVE-2021-4010.patch
 Patch6003: backport-CVE-2021-4011.patch
+Patch6004: backport-rename-bool-to-boolean.patch
 
 BuildRequires:  audit-libs-devel autoconf automake bison dbus-devel flex git gcc 
 BuildRequires:  systemtap-sdt-devel libtool pkgconfig 
@@ -429,6 +430,9 @@ find %{inst_srcdir}/hw/xfree86 -name \*.c -delete
 %{_libdir}/xorg/protocol.txt
 
 %changelog
+* Sat Jan 8 2022 yangcheng<yangcheng87@huawei.com> - 1.20.11-4
+- rename bool to boolean
+
 * Mon Dec 27 2021 yangcheng<yangcheng87@huawei.com> - 1.20.11-3
 - provide xorg-x11-server-Xorg and xorg-x11-server-Xwayland
 
