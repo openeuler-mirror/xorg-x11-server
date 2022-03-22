@@ -16,7 +16,7 @@
 
 Name:           xorg-x11-server
 Version:        1.20.8
-Release:        10
+Release:        11
 Summary:        X.Org X11 X server
 License:        MIT and GPLv2
 URL:            https://www.x.org
@@ -333,6 +333,9 @@ find %{inst_srcdir}/hw/xfree86 -name \*.c -delete
 %{_libdir}/xorg/protocol.txt
 
 %changelog
+* Tue Mar 22 2022 herengui <herengui@uniontech.com> - 1.20.8-11
+- rebuild for upgrade
+
 * Sat Dec 18 2021 yangcheng<yangcheng87@huawei.com> - 1.20.8-10
 - Type:CVE
 - Id:CVE-2021-4008,CVE-2021-4009,CVE-2021-4010,CVE-2021-4011
