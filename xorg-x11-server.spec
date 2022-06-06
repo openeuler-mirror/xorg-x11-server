@@ -16,7 +16,7 @@
 
 Name:           xorg-x11-server
 Version:        1.20.11
-Release:        4
+Release:        5
 Summary:        X.Org X11 X server
 License:        MIT and GPLv2
 URL:            https://www.x.org
@@ -107,7 +107,7 @@ BuildRequires:  libunwind-devel
 Requires:       pixman >= 0.30.0 xkeyboard-config xkbcomp
 Requires:       system-setup-keyboard xorg-x11-drv-libinput libEGL
 Requires:       xorg-x11-xauth
-
+Requires:       xorg-x11-server-common >= %{version}-%{release}
 Obsoletes:      %{name}-Xorg < %{version}-%{release} %{name}-Xwayland < %{version}-%{release}
 Provides:       %{name}-Xorg = %{version}-%{release} %{name}-Xorg%{?_isa} = %{version}-%{release} %{name}-Xwayland = %{version}-%{release} %{name}-Xwayland%{?_isa} = %{version}-%{release}
 
@@ -430,6 +430,13 @@ find %{inst_srcdir}/hw/xfree86 -name \*.c -delete
 %{_libdir}/xorg/protocol.txt
 
 %changelog
+
+* Mon Jun 6 2022 houjinchang <houjinchang@huawei.com> - 1.20.11-5
+- Type:bugfix
+- CVE:NA
+- SUG:NA
+- DESC:add xorg-x11-common require in main package
+
 * Sat Jan 8 2022 yangcheng<yangcheng87@huawei.com> - 1.20.11-4
 - rename bool to boolean
 
