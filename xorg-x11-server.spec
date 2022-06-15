@@ -453,7 +453,7 @@ find %{inst_srcdir}/hw/xfree86 -name \*.c -delete
 * Tue Jun 08 2021 zhanzhimin<zhanzhimin@huawei.com> - 1.20.10-5
 - add secure compilation options
 
-* Tun Jun 08 2021 zhanglin <lin.zhang@turbolinux.com.cn> - 1.20.10-4
+* Tue Jun 08 2021 zhanglin <lin.zhang@turbolinux.com.cn> - 1.20.10-4
 - Remove pam_console dependency
 
 * Mon Jun 07 2021 wangkerong<wangkerong@huawei.com> - 1.20.10-3
