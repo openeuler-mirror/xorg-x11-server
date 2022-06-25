@@ -16,7 +16,7 @@
 
 Name:           xorg-x11-server
 Version:        1.20.11
-Release:        5
+Release:        6
 Summary:        X.Org X11 X server
 License:        MIT and GPLv2
 URL:            https://www.x.org
@@ -108,8 +108,8 @@ Requires:       pixman >= 0.30.0 xkeyboard-config xkbcomp
 Requires:       system-setup-keyboard xorg-x11-drv-libinput libEGL
 Requires:       xorg-x11-xauth
 Requires:       xorg-x11-server-common >= %{version}-%{release}
-Obsoletes:      %{name}-Xorg < %{version}-%{release} %{name}-Xwayland < %{version}-%{release}
-Provides:       %{name}-Xorg = %{version}-%{release} %{name}-Xorg%{?_isa} = %{version}-%{release} %{name}-Xwayland = %{version}-%{release} %{name}-Xwayland%{?_isa} = %{version}-%{release}
+Obsoletes:      %{name}-Xorg < %{version}-%{release}
+Provides:       %{name}-Xorg = %{version}-%{release} %{name}-Xorg%{?_isa} = %{version}-%{release}
 
 Provides:       Xorg = %{version}-%{release}
 Obsoletes: 		Xorg < %{version}-%{release}
@@ -267,7 +267,7 @@ autoreconf -ivf || exit 1
 
 %configure %{xservers} \
         --enable-dependency-tracking \
-        --enable-xwayland-eglstream \
+        --disable-xwayland-eglstream \
         --with-pic \
         %{?no_int10} --with-int10=x86emu \
         --with-default-font-path=%{default_font_path} \
@@ -282,7 +282,7 @@ autoreconf -ivf || exit 1
         --enable-config-udev \
         --disable-unit-tests \
         --enable-dmx \
-        --enable-xwayland \
+        --disable-xwayland \
         %{dri_flags} %{?bodhi_flags} \
         ${CONFIGURE}
 
@@ -341,7 +341,6 @@ find %{inst_srcdir}/hw/xfree86 -name \*.c -delete
 
 %files common
 %doc COPYING
-%{_mandir}/man1/Xserver.1*
 %{_libdir}/xorg/protocol.txt
 %dir %{_localstatedir}/lib/xkb
 %{_localstatedir}/lib/xkb/README.compiled
@@ -357,7 +356,6 @@ find %{inst_srcdir}/hw/xfree86 -name \*.c -delete
 %config %attr(0644,root,root) %{_sysconfdir}/pam.d/xserver
 %{_bindir}/X
 %{_bindir}/Xorg
-%{_bindir}/Xwayland
 %{_libexecdir}/Xorg
 %{Xorgperms} %{_libexecdir}/Xorg.wrap
 %{_bindir}/cvt
@@ -426,10 +424,11 @@ find %{inst_srcdir}/hw/xfree86 -name \*.c -delete
 %defattr(-,root,root)
 %doc ChangeLog README.md
 %{_mandir}/man*/*
-%{_localstatedir}/lib/xkb/README.compiled
-%{_libdir}/xorg/protocol.txt
 
 %changelog
+* Fri Jun 24 2022 wangkerong<wangkerong@h-partners.com> - 1.20.11-6
+- disable Xwayland provide by xorg-x11-server-Xwayland
+- delete the same files of common and help
 
 * Mon Jun 6 2022 houjinchang <houjinchang@huawei.com> - 1.20.11-5
 - Type:bugfix
