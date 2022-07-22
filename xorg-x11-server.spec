@@ -16,7 +16,7 @@
 
 Name:           xorg-x11-server
 Version:        1.20.11
-Release:        6
+Release:        7
 Summary:        X.Org X11 X server
 License:        MIT and GPLv2
 URL:            https://www.x.org
@@ -76,7 +76,10 @@ Patch0025: 0021-xwayland-Fix-emulated-modes-not-being-removed-when-s.patch
 Patch0026: 0022-xwayland-Call-xwl_window_check_resolution_change_emu.patch
 Patch0027: 0023-xwayland-Fix-setting-of-_XWAYLAND_RANDR_EMU_MONITOR_.patch
 Patch0028: 0024-xwayland-Remove-unnecessary-xwl_window_is_toplevel-c.patch
- 
+
+Patch0100: 0001-Fix-the-crash-in-shadowUpdatePacked-because-of-memcp.patch
+Patch0101: 0002-present-Crash-in-present_scmd_get_crtc-and-present_flush.patch
+
 Patch0029: xorg-s11-server-CVE-2018-20839.patch
 Patch6000: backport-CVE-2021-4008.patch
 Patch6001: backport-CVE-2021-4009.patch
@@ -426,6 +429,10 @@ find %{inst_srcdir}/hw/xfree86 -name \*.c -delete
 %{_mandir}/man*/*
 
 %changelog
+* Fri Jul 22 2022 ouyangminxiang<ouyangminxiang@kylinsec.com.cn> - 1.20.11-7
+- Fix the crash in shadowUpdatePacked because of memcpy acts randomly with overlapping areas.
+- Fix the problem of black screen after entering the login interface
+
 * Fri Jun 24 2022 wangkerong<wangkerong@h-partners.com> - 1.20.11-6
 - disable Xwayland provide by xorg-x11-server-Xwayland
 - delete the same files of common and help
