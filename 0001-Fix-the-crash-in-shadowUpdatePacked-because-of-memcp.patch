@@ -1,0 +1,26 @@
+From de7b67924425b3aa540c19c8431ff0d7c5892608 Mon Sep 17 00:00:00 2001
+From: rpm-build <rpm-build>
+Date: Tue, 24 May 2022 09:49:36 +0800
+Subject: [PATCH] Fix the crash in shadowUpdatePacked because of memcpy acts
+ randomly with overlapping areas.
+
+Signed-off-by: tangjie02 <tangjie02@kylinsec.com.cn>
+---
+ miext/shadow/shpacked.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/miext/shadow/shpacked.c b/miext/shadow/shpacked.c
+index 5220854..8b16a98 100644
+--- a/miext/shadow/shpacked.c
++++ b/miext/shadow/shpacked.c
+@@ -98,7 +98,7 @@ shadowUpdatePacked(ScreenPtr pScreen, shadowBufPtr pBuf)
+                     i = width;
+                 width -= i;
+                 scr += i;
+-                memcpy(win, sha, i * sizeof(FbBits));
++                memmove(win, sha, i * sizeof(FbBits));
+                 sha += i;
+             }
+             shaLine += shaStride;
+-- 
+2.33.0
