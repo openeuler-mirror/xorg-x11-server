@@ -16,7 +16,7 @@
 
 Name:           xorg-x11-server
 Version:        1.20.11
-Release:        7
+Release:        8
 Summary:        X.Org X11 X server
 License:        MIT and GPLv2
 URL:            https://www.x.org
@@ -86,6 +86,7 @@ Patch6001: backport-CVE-2021-4009.patch
 Patch6002: backport-CVE-2021-4010.patch
 Patch6003: backport-CVE-2021-4011.patch
 Patch6004: backport-rename-bool-to-boolean.patch
+Patch6005: backport-CVE-2022-2319.patch 
 
 BuildRequires:  audit-libs-devel autoconf automake bison dbus-devel flex git gcc 
 BuildRequires:  systemtap-sdt-devel libtool pkgconfig 
@@ -429,6 +430,10 @@ find %{inst_srcdir}/hw/xfree86 -name \*.c -delete
 %{_mandir}/man*/*
 
 %changelog
+* Fri Jul 22 2022 baiguo<baiguo@kylinos.cn> - 1.20.11-8
+- xkb: switch to array index loops to moving pointers
+- fix CVE-2022-2319
+
 * Fri Jul 22 2022 ouyangminxiang<ouyangminxiang@kylinsec.com.cn> - 1.20.11-7
 - Fix the crash in shadowUpdatePacked because of memcpy acts randomly with overlapping areas.
 - Fix the problem of black screen after entering the login interface
