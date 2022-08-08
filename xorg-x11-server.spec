@@ -16,7 +16,7 @@
 
 Name:           xorg-x11-server
 Version:        1.20.11
-Release:        8
+Release:        9
 Summary:        X.Org X11 X server
 License:        MIT and GPLv2
 URL:            https://www.x.org
@@ -86,7 +86,9 @@ Patch6001: backport-CVE-2021-4009.patch
 Patch6002: backport-CVE-2021-4010.patch
 Patch6003: backport-CVE-2021-4011.patch
 Patch6004: backport-rename-bool-to-boolean.patch
-Patch6005: backport-CVE-2022-2319.patch 
+Patch6005: backport-0001-CVE-2022-2319.patch
+Patch6006: backport-0002-CVE-2022-2319.patch
+Patch6007: backport-CVE-2022-2320.patch
 
 BuildRequires:  audit-libs-devel autoconf automake bison dbus-devel flex git gcc 
 BuildRequires:  systemtap-sdt-devel libtool pkgconfig 
@@ -430,6 +432,9 @@ find %{inst_srcdir}/hw/xfree86 -name \*.c -delete
 %{_mandir}/man*/*
 
 %changelog
+* Wed Aug 03 2022 wangkerong<wangkerong@h-partners.com> - 1.20.11-9
+- fix CVE-2022-2319,CVE-2022-2320
+
 * Fri Jul 22 2022 baiguo<baiguo@kylinos.cn> - 1.20.11-8
 - xkb: switch to array index loops to moving pointers
 - fix CVE-2022-2319
