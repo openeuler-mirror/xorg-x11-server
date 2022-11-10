@@ -16,7 +16,7 @@
 
 Name:           xorg-x11-server
 Version:        1.20.11
-Release:        7
+Release:        8
 Summary:        X.Org X11 X server
 License:        MIT and GPLv2
 URL:            https://www.x.org
@@ -86,6 +86,7 @@ Patch6004: backport-rename-bool-to-boolean.patch
 Patch6005: backport-0001-CVE-2022-2319.patch
 Patch6006: backport-0002-CVE-2022-2319.patch
 Patch6007: backport-CVE-2022-2320.patch
+Patch6008: xorg-server-1.20.11-sw.patch
 
 BuildRequires:  audit-libs-devel autoconf automake bison dbus-devel flex git gcc 
 BuildRequires:  systemtap-sdt-devel libtool pkgconfig 
@@ -103,7 +104,7 @@ BuildRequires:  libxshmfence-devel >= 1.1 pixman-devel >= 0.30.0 libdrm-devel >=
 BuildRequires:  mesa-libGL-devel >= 9.2 libpciaccess-devel >= 0.13.1
 BuildRequires:  wayland-devel wayland-protocols-devel egl-wayland-devel 
 
-%ifarch aarch64 %{arm} x86_64
+%ifarch aarch64 %{arm} x86_64 sw_64
 BuildRequires:  libunwind-devel
 %endif
 
@@ -256,7 +257,7 @@ export LDFLAGS="$RPM_LD_FLAGS -specs=/usr/lib/rpm/generic-hardened-ld"
 export CXXFLAGS="$RPM_OPT_FLAGS -specs=/usr/lib/rpm/generic-hardened-cc1"
 export CFLAGS="$RPM_OPT_FLAGS -specs=/usr/lib/rpm/generic-hardened-cc1"
 
-%ifnarch %{ix86} x86_64
+%ifnarch %{ix86} x86_64 sw_64
 %global no_int10 --disable-vbe --disable-int10-module
 %endif
 
@@ -337,7 +338,7 @@ find %{inst_srcdir}/hw/xfree86 -name \*.c -delete
 
 {
 %delete_la
-%ifnarch %{ix86} x86_64
+%ifnarch %{ix86} x86_64 sw_64
     rm -f %{buildroot}/%{_libdir}/xorg/modules/lib{int10,vbe}.so
 %endif
 }
@@ -429,6 +430,9 @@ find %{inst_srcdir}/hw/xfree86 -name \*.c -delete
 %{_mandir}/man*/*
 
 %changelog
+* Wed Oct 26 2022 wuzx<wuzx1226@qq.com> - 1.20.11-8
+- Add sw64 architecture
+
 * Wed Aug 03 2022 wangkerong<wangkerong@h-partners.com> - 1.20.11-7
 - fix CVE-2022-2319,CVE-2022-2320
 
