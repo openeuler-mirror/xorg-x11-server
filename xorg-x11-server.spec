@@ -16,7 +16,7 @@
 
 Name:           xorg-x11-server
 Version:        1.20.8
-Release:        12
+Release:        13
 Summary:        X.Org X11 X server
 License:        MIT and GPLv2
 URL:            https://www.x.org
@@ -93,6 +93,8 @@ Patch6003: backport-CVE-2021-4011.patch
 Patch6004: backport-0001-CVE-2022-2319.patch
 Patch6005: backport-0002-CVE-2022-2319.patch
 Patch6006: backport-CVE-2022-2320.patch
+Patch6007: backport-CVE-2022-3551.patch
+Patch6008: backport-CVE-2022-3553.patch
 
 BuildRequires:  audit-libs-devel autoconf automake bison dbus-devel flex flex-devel git gcc
 BuildRequires:  systemtap-sdt-devel libtool pkgconfig 
@@ -335,6 +337,9 @@ find %{inst_srcdir}/hw/xfree86 -name \*.c -delete
 %{_libdir}/xorg/protocol.txt
 
 %changelog
+* Fri Nov 18 2022 wangkerong <wangkerong@h-partners.com> - 1.20.8-13
+- fix CVE-2022-3551,CVE-2022-3553
+
 * Wed Aug 03 2022 wangkerong <wangkerong@h-partners.com> - 1.20.8-12
 - fix CVE-2022-2319,CVE-2022-2320
 
