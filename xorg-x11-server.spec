@@ -16,7 +16,7 @@
 
 Name:           xorg-x11-server
 Version:        1.20.11
-Release:        8
+Release:        10
 Summary:        X.Org X11 X server
 License:        MIT and GPLv2
 URL:            https://www.x.org
@@ -76,7 +76,10 @@ Patch0025: 0021-xwayland-Fix-emulated-modes-not-being-removed-when-s.patch
 Patch0026: 0022-xwayland-Call-xwl_window_check_resolution_change_emu.patch
 Patch0027: 0023-xwayland-Fix-setting-of-_XWAYLAND_RANDR_EMU_MONITOR_.patch
 Patch0028: 0024-xwayland-Remove-unnecessary-xwl_window_is_toplevel-c.patch
- 
+
+Patch0100: 0001-Fix-the-crash-in-shadowUpdatePacked-because-of-memcp.patch
+Patch0101: 0002-present-Crash-in-present_scmd_get_crtc-and-present_flush.patch
+
 Patch0029: xorg-s11-server-CVE-2018-20839.patch
 Patch6000: backport-CVE-2021-4008.patch
 Patch6001: backport-CVE-2021-4009.patch
@@ -86,7 +89,7 @@ Patch6004: backport-rename-bool-to-boolean.patch
 Patch6005: backport-0001-CVE-2022-2319.patch
 Patch6006: backport-0002-CVE-2022-2319.patch
 Patch6007: backport-CVE-2022-2320.patch
-Patch6008: xorg-server-1.20.11-sw.patch
+Patch6008: CVE-2022-3551.patch
 
 BuildRequires:  audit-libs-devel autoconf automake bison dbus-devel flex git gcc 
 BuildRequires:  systemtap-sdt-devel libtool pkgconfig 
@@ -104,7 +107,7 @@ BuildRequires:  libxshmfence-devel >= 1.1 pixman-devel >= 0.30.0 libdrm-devel >=
 BuildRequires:  mesa-libGL-devel >= 9.2 libpciaccess-devel >= 0.13.1
 BuildRequires:  wayland-devel wayland-protocols-devel egl-wayland-devel 
 
-%ifarch aarch64 %{arm} x86_64 sw_64
+%ifarch aarch64 %{arm} x86_64
 BuildRequires:  libunwind-devel
 %endif
 
@@ -257,7 +260,7 @@ export LDFLAGS="$RPM_LD_FLAGS -specs=/usr/lib/rpm/generic-hardened-ld"
 export CXXFLAGS="$RPM_OPT_FLAGS -specs=/usr/lib/rpm/generic-hardened-cc1"
 export CFLAGS="$RPM_OPT_FLAGS -specs=/usr/lib/rpm/generic-hardened-cc1"
 
-%ifnarch %{ix86} x86_64 sw_64
+%ifnarch %{ix86} x86_64
 %global no_int10 --disable-vbe --disable-int10-module
 %endif
 
@@ -338,7 +341,7 @@ find %{inst_srcdir}/hw/xfree86 -name \*.c -delete
 
 {
 %delete_la
-%ifnarch %{ix86} x86_64 sw_64
+%ifnarch %{ix86} x86_64
     rm -f %{buildroot}/%{_libdir}/xorg/modules/lib{int10,vbe}.so
 %endif
 }
@@ -430,11 +433,22 @@ find %{inst_srcdir}/hw/xfree86 -name \*.c -delete
 %{_mandir}/man*/*
 
 %changelog
-* Wed Oct 26 2022 wuzx<wuzx1226@qq.com> - 1.20.11-8
-- Add sw64 architecture
+* Mon Oct 24 2022 qz_cx <wangqingzheng@kylinos.cn> - 1.20.11-10
+- Type:CVE
+- ID:NA
+- SUG:NA
+- DESC: fix CVE-2022-3551
 
-* Wed Aug 03 2022 wangkerong<wangkerong@h-partners.com> - 1.20.11-7
+* Wed Aug 03 2022 wangkerong<wangkerong@h-partners.com> - 1.20.11-9
 - fix CVE-2022-2319,CVE-2022-2320
+
+* Fri Jul 22 2022 baiguo<baiguo@kylinos.cn> - 1.20.11-8
+- xkb: switch to array index loops to moving pointers
+- fix CVE-2022-2319
+ 
+* Fri Jul 22 2022 ouyangminxiang<ouyangminxiang@kylinsec.com.cn> - 1.20.11-7
+- Fix the crash in shadowUpdatePacked because of memcpy acts randomly with overlapping areas.
+- Fix the problem of black screen after entering the login interface
 
 * Fri Jun 24 2022 wangkerong<wangkerong@h-partners.com> - 1.20.11-6
 - disable Xwayland provide by xorg-x11-server-Xwayland
@@ -469,7 +483,7 @@ find %{inst_srcdir}/hw/xfree86 -name \*.c -delete
 * Tue Jun 08 2021 zhanzhimin<zhanzhimin@huawei.com> - 1.20.10-5
 - add secure compilation options
 
-* Tun Jun 08 2021 zhanglin <lin.zhang@turbolinux.com.cn> - 1.20.10-4
+* Tue Jun 08 2021 zhanglin <lin.zhang@turbolinux.com.cn> - 1.20.10-4
 - Remove pam_console dependency
 
 * Mon Jun 07 2021 wangkerong<wangkerong@huawei.com> - 1.20.10-3
