@@ -16,7 +16,7 @@
 
 Name:           xorg-x11-server
 Version:        1.20.11
-Release:        11
+Release:        12
 Summary:        X.Org X11 X server
 License:        MIT and GPLv2
 URL:            https://www.x.org
@@ -89,10 +89,11 @@ Patch6004: backport-rename-bool-to-boolean.patch
 Patch6005: backport-0001-CVE-2022-2319.patch
 Patch6006: backport-0002-CVE-2022-2319.patch
 Patch6007: backport-CVE-2022-2320.patch
-Patch6008: CVE-2022-3551.patch
+Patch6008: backport-CVE-2022-3551.patch
 %ifarch sw_64
 Patch6009: xorg-server-1.20.11-sw.patch
 %endif
+Patch6010: backport-CVE-2022-3553.patch
 
 BuildRequires:  audit-libs-devel autoconf automake bison dbus-devel flex git gcc 
 BuildRequires:  systemtap-sdt-devel libtool pkgconfig 
@@ -436,6 +437,9 @@ find %{inst_srcdir}/hw/xfree86 -name \*.c -delete
 %{_mandir}/man*/*
 
 %changelog
+* Fri Nov 18 2022 wangkerong <wangkerong@h-partners.com> -1.20.11-12
+- fix CVE-2022-3551,CVE-2022-3553
+
 * Wed Oct 26 2022 wuzx<wuzx1226@qq.com> - 1.20.11-11
 - Add sw64 architecture
 
