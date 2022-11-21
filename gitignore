@@ -283,7 +283,6 @@ include/xkb-config.h
 include/xorg-config.h
 include/xorg-server.h
 include/xwin-config.h
-include/dix-config.h
 mfb/mfbbltC.c
 mfb/mfbbltCI.c
 mfb/mfbbltG.c
