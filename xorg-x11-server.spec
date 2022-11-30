@@ -16,7 +16,7 @@
 
 Name:           xorg-x11-server
 Version:        1.20.11
-Release:        12
+Release:        13
 Summary:        X.Org X11 X server
 License:        MIT and GPLv2
 URL:            https://www.x.org
@@ -81,6 +81,7 @@ Patch0100: 0001-Fix-the-crash-in-shadowUpdatePacked-because-of-memcp.patch
 Patch0101: 0002-present-Crash-in-present_scmd_get_crtc-and-present_flush.patch
 
 Patch0029: xorg-s11-server-CVE-2018-20839.patch
+Patch0030: 0025-fix-compile-error-with-gcc-12.patch
 Patch6000: backport-CVE-2021-4008.patch
 Patch6001: backport-CVE-2021-4009.patch
 Patch6002: backport-CVE-2021-4010.patch
@@ -437,6 +438,9 @@ find %{inst_srcdir}/hw/xfree86 -name \*.c -delete
 %{_mandir}/man*/*
 
 %changelog
+* Tue Nov 29 2022 misaka00251 <liuxin@iscas.ac.cn> - 1.20.11-13
+- Backport patch to fix build with gcc 12
+
 * Fri Nov 18 2022 wangkerong <wangkerong@h-partners.com> -1.20.11-12
 - fix CVE-2022-3551,CVE-2022-3553
 
